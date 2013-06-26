@@ -9,4 +9,4 @@
   ;; work around dangerous default behaviour in Clojure
   (alter-var-root #'*read-eval* (constantly false))
   (println "Prison Break!")
-  (println action))
+  (run-stuff))
