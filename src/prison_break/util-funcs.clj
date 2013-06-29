@@ -7,7 +7,7 @@
    (map 
       (fn [x] 
          (do 
-            (println str " ---")
-            (println str "  Action : " (:my-action x))
-            (println str "  History: " (:history-actions x))))
+            (println (str " ---"))
+            (println (str "  Action : " (:my-action x)))
+            (println (str "  History: " (:history-actions x)))))
       (:strategies player))) 

@@ -17,8 +17,6 @@
 
 (defn run-stuff [] 
          (print-player "Player 1" TitForTat)
-         (println (run-match TitForTat TitForTat 200))
-         (println (run-match Random Random 200))
 )
 
 
