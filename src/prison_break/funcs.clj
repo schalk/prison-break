@@ -1,7 +1,7 @@
 (ns prison-break.core)
 
 (load "game-funcs")
-
+(load "util-funcs")
 
 (def TitForTat 
    (Player. 
@@ -16,7 +16,9 @@
    
 
 (defn run-stuff [] 
+         (print-player "Player 1" TitForTat)
          (println (run-match TitForTat TitForTat 200))
+         (println (run-match Random Random 200))
 )
 
 
