@@ -30,7 +30,9 @@
 (defn get-payoff
    [prisoner-a prisoner-b]
    "Calculates the payoff based on each prisoner action"
-   ((payoff-matrix prisoner-a) prisoner-b)
+   (let [handle-random (fn [x] (if (= x :random) ([:cooperate :defect] (rand-int 2)) x))]
+      ((payoff-matrix (handle-random prisoner-a)) (handle-random prisoner-b))
+   )
 )
 
 
@@ -41,12 +43,8 @@
       (if (first strat-loop)
          (if (action-matches? (first strat-loop) (first hist-loop))
             (recur (rest strat-loop) (rest hist-loop))
-            false
-         )
-         true
-      )
-   )
-)
+            false)
+         true)))
 
 (defn find-strategy
    "Find the player's strategy based on historical moves"
@@ -57,15 +55,24 @@
    )
 )
 
+(defn run-game
+   [prisoner-a history-a prisoner-b history-b]
+   (let [strategy-a (find-strategy (:strategies prisoner-a) history-b) strategy-b (find-strategy (:strategies prisoner-b) history-a) ]
+      [(:my-action strategy-a) (:my-action strategy-b)]
+   )
+)
+
+
 (defn run-match
    [prisoner-a prisoner-b game-count]
    "Runs the specified number of games for the two supplied prisoners, returning their payoffs"
-   (loop [payoff-a 0, payoff-b 0, games-played 0, history []]
+   (loop [payoff-a 0, payoff-b 0, games-played 0, history-a [], history-b []]
       (if (= games-played game-count)
          '(payoff-a payoff-b)
-         (do
-
-
+         (let [strategy-a (find-strategy (:strategies prisoner-a))] 
+            (let [strategy-b (find-strategy (:strategies prisoner-b))]
+               
+            )
          )
       )
    )
