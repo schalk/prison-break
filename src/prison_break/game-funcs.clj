@@ -12,6 +12,13 @@
 (defrecord Strategy [my-action history-actions])
 (defrecord Player [strategies])
 
+(defn resolve-random 
+    [action]
+    "Converts :random to a concrete action"
+    (if (= action :random) 
+       ([:cooperate :defect] (rand-int 2)) 
+       action))
+
 
 (defn action-matches?
    [strategy-action history-action]
@@ -30,9 +37,7 @@
 (defn get-payoff
    [prisoner-a prisoner-b]
    "Calculates the payoff based on each prisoner action"
-   (let [handle-random (fn [x] (if (= x :random) ([:cooperate :defect] (rand-int 2)) x))]
-      ((payoff-matrix (handle-random prisoner-a)) (handle-random prisoner-b))
-   )
+   ((payoff-matrix prisoner-a) prisoner-b)
 )
 
 
@@ -68,11 +73,14 @@
    "Runs the specified number of games for the two supplied prisoners, returning their payoffs"
    (loop [payoff-a 0, payoff-b 0, games-played 0, history-a [], history-b []]
       (if (= games-played game-count)
-         '(payoff-a payoff-b)
-         (let [strategy-a (find-strategy (:strategies prisoner-a))] 
-            (let [strategy-b (find-strategy (:strategies prisoner-b))]
-               
-            )
+         [payoff-a payoff-b]
+         (let [strategy-a (find-strategy (:strategies prisoner-a) history-b)
+               strategy-b (find-strategy (:strategies prisoner-b) history-a)
+               action-a (resolve-random (:my-action strategy-a))
+               action-b (resolve-random (:my-action strategy-b))
+               payoffs (get-payoff action-a action-b)
+               [temp-a temp-b] payoffs ]
+             (recur (+ payoff-a temp-a) (+ payoff-b temp-b) (+ 1 games-played) (into [action-a] history-a) (into [action-b] history-b)) 
          )
       )
    )

@@ -16,8 +16,7 @@
    
 
 (defn run-stuff [] 
-         (println (:my-action (find-strategy (:strategies TitForTat) [:cooperate :cooperate])))
-         (println (apply get-payoff (run-game Random [:cooperate :cooperate] Random  [:cooperate :cooperate])))
+         (println (run-match TitForTat TitForTat 200))
 )
 
 
