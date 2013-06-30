@@ -16,7 +16,8 @@
    
 
 (defn run-stuff [] 
-         (print-player "Player 1" TitForTat)
+   (print-player "Player 1" TitForTat)
+        
 )
 
 

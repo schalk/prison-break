@@ -2,6 +2,7 @@
   (:gen-class))
 
 (load "funcs")
+(load "evolution")
 
 (defn -main
   "I don't do a whole lot ... yet."
