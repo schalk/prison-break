@@ -9,7 +9,7 @@
 (defn create-random-player 
    [max-size max-history]
    "Creates a random strategy"
-   (let [default-strat [([:cooperate :defect :random] (rand-int 3))]
+   (let [default-strat ([:cooperate :defect :random] (rand-int 3))
         strategy-size (rand-int (- max-size 1))]
       (loop [strategies [(Strategy. default-strat [])] idx 0]
          (if (= strategy-size idx)

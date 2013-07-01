@@ -37,6 +37,7 @@
 (defn get-payoff
    [prisoner-a prisoner-b]
    "Calculates the payoff based on each prisoner action"
+   (println prisoner-a " " prisoner-b)
    ((payoff-matrix prisoner-a) prisoner-b)
 )
 

@@ -2,6 +2,7 @@
 
 (load "game-funcs")
 (load "util-funcs")
+(load "evolution")
 
 (def TitForTat 
    (Player. 
@@ -17,6 +18,10 @@
 
 (defn run-stuff [] 
    (print-player "Player 1" TitForTat)
+   (let [new-player (create-random-player 10 10)] 
+      (println new-player)
+      (run-match new-player TitForTat 200)
+   )
         
 )
 
