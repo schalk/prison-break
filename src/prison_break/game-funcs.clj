@@ -37,7 +37,6 @@
 (defn get-payoff
    [prisoner-a prisoner-b]
    "Calculates the payoff based on each prisoner action"
-   (println prisoner-a " " prisoner-b)
    ((payoff-matrix prisoner-a) prisoner-b)
 )
 
@@ -86,4 +85,29 @@
       )
    )
 )
+
+(defn update-total-payoffs
+   [prisoner-a-idx prisoner-b-idx payoffs game-result]
+   "Add the game results into the payoffs vector"
+   (vec (for [idx (range (count payoffs))] 
+      (if (= idx prisoner-a-idx) 
+         (+ (game-result 0) (payoffs idx))
+         (if (= idx prisoner-b-idx)
+            (+ (game-result 1) (payoffs idx))
+            (payoffs idx))))))
+
+(defn run-tournament
+   [players tournament-lengh]
+   (let [player-count (count players)
+         game-descriptions (for [x (range player-count) y (range player-count) :while (< y x)] [x y])
+         player-payoffs (vec (repeat player-count 0))]
+      (loop [games game-descriptions payoffs player-payoffs] 
+         (if (not (first games))  
+            payoffs
+            (let [[prisoner-a-idx prisoner-b-idx] (first games)
+                  prisoner-a (players prisoner-a-idx)
+                  prisoner-b (players prisoner-b-idx)
+                  result (run-match prisoner-a prisoner-b tournament-lengh)]
+                  (recur (rest games) (update-total-payoffs prisoner-a-idx prisoner-b-idx payoffs result)))))))
+
 

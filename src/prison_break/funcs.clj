@@ -17,12 +17,7 @@
    
 
 (defn run-stuff [] 
-   (print-player "Player 1" TitForTat)
-   (let [new-player (create-random-player 10 10)] 
-      (println new-player)
-      (run-match new-player TitForTat 200)
-   )
-        
+   (println (run-tournament (create-random-population 10 5 5) 10))
 )
 
 
